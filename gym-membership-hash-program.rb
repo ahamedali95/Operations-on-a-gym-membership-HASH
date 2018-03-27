@@ -9,7 +9,7 @@ gym_membership = {
     "member since": "01/18/2017",
     "membership type": "black",
     "violations": {"violation?": true, "no of violations": 1},
-    "locker": {"locker?": false, "locker no": nil},
+    "locker": {"locker?": true, "locker no": 400},
     "privileges": ["Suana", "Massage chair", "Bathing"],
     "classes": {
       "attended": [
@@ -81,6 +81,10 @@ def assign_a_locker(gym_membership, person_name)
     return "Sorry, no lockers are available"
   end
   
+  if gym_membership[person_name.to_sym][:"locker"][:"locker?"]
+    return "You already have a locker with us. Your locker number is #{gym_membership[person_name.to_sym][:"locker"][:"locker no"]}"
+  end
+  
   gym_membership[person_name.to_sym][:"locker"][:"locker?"] = true
   gym_membership[person_name.to_sym][:"locker"][:"locker no"] = $available_lockers.shift()
   
@@ -100,12 +104,12 @@ def remove_a_locker(gym_membership, person_name)
   gym_membership[person_name.to_sym][:"locker"][:"locker?"] = false
   $available_lockers.unshift(gym_membership[person_name.to_sym][:"locker"][:"locker no"])
   gym_membership[person_name.to_sym][:"locker"][:"locker no"] = nil
-  puts "Successful removal of locker number #{locker_no} from your account"
+  #puts "Successful removal of locker number #{locker_no} from your account"
   
   gym_membership
 end
 
-remove_a_locker(gym_membership, "Ahamed Abbas")
+#remove_a_locker(gym_membership, "Ahamed Abbas")
 # puts $available_lockers.inspect
 
 #Person has a violation 
@@ -197,4 +201,4 @@ def cancel_a_class(gym_membership, person_name, class_name, class_date, class_ti
   return "Cancellation failure: #{class_name} at #{class_time} on #{class_date} was not registered"
 end
 
-cancel_a_class(gym_membership, "Ahamed Abbas", "weight loss training", "04/02/2018", "1:30 PM")
+#cancel_a_class(gym_membership, "Ahamed Abbas", "weight loss training", "04/02/2018", "1:30 PM")
